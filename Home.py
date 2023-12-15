@@ -54,3 +54,35 @@ ptwd = st.slider("กรุณาเลือกข้อมูล petal.width",
 
 splen = st.number_input("กรุณาเลือกข้อมูล sepal.length")
 spwd = st.number_input("กรุณาเลือกข้อมูล sepal.width")
+
+from sklearn.neighbors import KNeighborsClassifier
+import numpy as np
+
+if st.button("ทำนายผล"):
+   # ทำนาย
+   #dt = pd.read_csv("./data/iris.csv") 
+
+   X = dt.drop('variety', axis=1)
+   y = dt.variety   
+
+   Knn_model = KNeighborsClassifier(n_neighbors=3)
+   Knn_model.fit(X, y)
+
+    #ข้อมูล input สำหรับทดลองจำแนกข้อมูล
+   x_input = np.array([[ptlen, ptwd, splen, spwd]])
+    # เอา input ไปทดสอบ
+   st.write(Knn_model.predict(x_input))
+   out=Knn_model.predict(x_input)
+
+   if out[0]=="Setosa":
+      #st.image("./pic/iris.jpg")
+      st.header("Setosa")
+   elif out[0]=="Versicolor":
+      #st.image("./pic/iris2.jpg")
+      st.header("Versicolor")
+   else:
+      #st.image("./pic/iris1.jpg")  
+      st.header("Verginiga")
+   st.button("ไม่ทำนายผล")
+else :
+    st.button("ไม่ทำนายผล")
